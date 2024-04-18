@@ -128,14 +128,6 @@
     <None Include="Resources\Фио.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\День рождения.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Дата Рождения">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Дата рождения.png" />
   </ItemGroup>
   <ItemGroup>

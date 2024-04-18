@@ -65,6 +65,33 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="border"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="20,20,20,20">
+                                <!-- Установите радиус для полукруглой формы -->
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#80BFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#3399FF"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style TargetType="ComboBox">
             <Setter Property="Margin" Value="5"/>
@@ -118,7 +145,7 @@
                             </Style>
                         </StackPanel.Resources>
                     </StackPanel>
-                    <Button Content="Добавить место работы" Click="AddExperienceButton_Click"/>
+                    <Button Content="Добавить место работы" Click="AddExperienceButton_Click" Height="37" Width="385"/>
                 </StackPanel>
 
                 <!-- Хардскиллы -->
@@ -163,7 +190,50 @@
 
                 <!-- Кнопка для экспорта -->
                 <StackPanel HorizontalAlignment="Center" Margin="5">
-                    <Button Content="Экспорт" Click="ExportButton_Click"/>
+                    <Button Content="Экспорт" Click="ExportButton_Click" Height="37" Width="98">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#4CAF50"/>
+                                <!-- Зеленый цвет -->
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Margin" Value="5"/>
+                                <Setter Property="Padding" Value="10"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="MinWidth" Value="100"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="FontFamily" Value="Segoe UI"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid>
+                                                <Border x:Name="border"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="20,20,20,20">
+                                                    <!-- Установите радиус для полукруглой формы -->
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="#80BFFF"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="#3399FF"/>
+                                                </Trigger>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter TargetName="border" Property="Opacity" Value="0.5"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
