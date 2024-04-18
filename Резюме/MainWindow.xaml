@@ -1,0 +1,171 @@
+﻿<Window x:Class="Резюме.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Резюме" Height="800" Width="500">
+    <Window.Resources>
+        <!-- Стили, которые вы предоставили -->
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="MinWidth" Value="200"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border BorderThickness="1"
+                                BorderBrush="#BDBDBD"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="PART_ContentHost" Property="Background" Value="#F0F0F0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#BDBDBD"/>
+            <Setter Property="MinWidth" Value="200"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DatePicker">
+                        <Border BorderThickness="1"
+                                BorderBrush="#BDBDBD"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10">
+                            <DatePickerTextBox x:Name="PART_TextBox"
+                                               Margin="{TemplateBinding Padding}"
+                                               Background="{TemplateBinding Background}"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               BorderThickness="0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- Остальные стили -->
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Background" Value="#4CAF50"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#BDBDBD"/>
+            <Setter Property="MinWidth" Value="200"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Ваши элементы интерфейса -->
+                <!-- ФИО -->
+                <StackPanel Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="C:\Users\mboyko2005\source\repos\Резюме\Резюме\Resources\Фио.png" Width="45" Height="35" Margin="0,0,5,0"/>
+                        <Label Content="ФИО:" />
+                    </StackPanel>
+                    <TextBox x:Name="FullNameTextBox"/>
+                </StackPanel>
+
+                <!-- Дата рождения -->
+                <StackPanel Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="C:\Users\mboyko2005\source\repos\Резюме\Резюме\Resources\Дата Рождения.png" Width="45" Height="35" Margin="0,0,5,0"/>
+                        <Label Content="Дата рождения:"/>
+                    </StackPanel>
+                    <DatePicker x:Name="BirthDatePicker"/>
+                </StackPanel>
+
+                <!-- Образование -->
+                <StackPanel Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="C:\Users\mboyko2005\source\repos\Резюме\Резюме\Resources\Образование.png" Width="45" Height="35" Margin="0,0,5,0"/>
+                        <Label Content="Образование:"/>
+                    </StackPanel>
+                    <TextBox x:Name="EducationTextBox"/>
+                </StackPanel>
+
+                <!-- Стаж работы -->
+                <StackPanel Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="C:\Users\mboyko2005\source\repos\Резюме\Резюме\Resources\Стаж работы.png" Width="45" Height="35" Margin="0,0,5,0"/>
+                        <Label Content="Стаж работы:"/>
+                    </StackPanel>
+                    <StackPanel x:Name="ExperienceStackPanel">
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBox">
+                                <Setter Property="Margin" Value="0,3,0,3"/>
+                            </Style>
+                        </StackPanel.Resources>
+                    </StackPanel>
+                    <Button Content="Добавить место работы" Click="AddExperienceButton_Click"/>
+                </StackPanel>
+
+                <!-- Хардскиллы -->
+                <StackPanel Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="C:\Users\mboyko2005\source\repos\Резюме\Резюме\Resources\logical-thinking.png" Width="45" Height="35" Margin="0,0,5,0"/>
+                        <Label Content="Хардскиллы:"/>
+                    </StackPanel>
+                    <TextBox x:Name="HardSkillsTextBox"/>
+                </StackPanel>
+
+                <!-- Софтскиллы -->
+                <StackPanel Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="C:\Users\mboyko2005\source\repos\Резюме\Резюме\Resources\pencil.png" Width="45" Height="35" Margin="0,0,5,0"/>
+                        <Label Content="Софтскиллы:"/>
+                    </StackPanel>
+                    <TextBox x:Name="SoftSkillsTextBox"/>
+                </StackPanel>
+
+                <!-- Желаемый график -->
+                <StackPanel Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="C:\Users\mboyko2005\source\repos\Резюме\Резюме\Resources\schedule.png" Width="45" Height="35" Margin="0,0,5,0"/>
+                        <Label Content="Желаемый график:"/>
+                    </StackPanel>
+                    <ComboBox x:Name="ScheduleComboBox">
+                        <ComboBoxItem Content="Полный день"/>
+                        <ComboBoxItem Content="Гибкий график"/>
+                        <ComboBoxItem Content="Удаленная работа"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Желаемая оплата -->
+                <StackPanel Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="C:\Users\mboyko2005\source\repos\Резюме\Резюме\Resources\free-icon-money-bag-482527.png" Width="45" Height="35" Margin="0,0,5,0"/>
+                        <Label Content="Желаемая оплата:"/>
+                    </StackPanel>
+                    <TextBox x:Name="SalaryTextBox"/>
+                </StackPanel>
+
+                <!-- Кнопка для экспорта -->
+                <StackPanel HorizontalAlignment="Center" Margin="5">
+                    <Button Content="Экспорт" Click="ExportButton_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>
