@@ -168,6 +168,7 @@ namespace Резюме
 
 		private void AddExperienceButton_Click(object sender, RoutedEventArgs e)
 		{
+			// Создание элементов интерфейса для опыта работы
 			WorkExperience experience = new WorkExperience();
 			workExperiences.Add(experience);
 
@@ -195,10 +196,16 @@ namespace Резюме
 			workExperiencePanel.Children.Add(endDateLabel);
 			workExperiencePanel.Children.Add(endDatePicker);
 
+			// Добавление опыта работы в ExperienceStackPanel
 			ExperienceStackPanel.Children.Add(workExperiencePanel);
 
+			// Создание кнопки "Сохранить" и установка ей размеров
 			Button saveButton = new Button();
 			saveButton.Content = "Сохранить";
+			saveButton.Height = 37;
+			saveButton.Width = 385;
+
+			// Обработчик события Click для сохранения опыта работы
 			saveButton.Click += (s, ev) =>
 			{
 				experience.Name = nameTextBox.Text;
@@ -206,26 +213,29 @@ namespace Резюме
 				experience.EndDate = endDatePicker.SelectedDate;
 				ExperienceStackPanel.Children.Remove(workExperiencePanel);
 			};
+
+			// Добавление кнопки "Сохранить" в панель опыта работы
 			workExperiencePanel.Children.Add(saveButton);
 		}
-	}
 
-	public class WorkExperience
-	{
-		public string Name { get; set; }
-		public DateTime? StartDate { get; set; }
-		public DateTime? EndDate { get; set; }
 
-		public string DurationInDays
+		public class WorkExperience
 		{
-			get
+			public string Name { get; set; }
+			public DateTime? StartDate { get; set; }
+			public DateTime? EndDate { get; set; }
+
+			public string DurationInDays
 			{
-				if (StartDate != null && EndDate != null)
+				get
 				{
-					TimeSpan duration = EndDate.Value - StartDate.Value;
-					return duration.Days.ToString();
+					if (StartDate != null && EndDate != null)
+					{
+						TimeSpan duration = EndDate.Value - StartDate.Value;
+						return duration.Days.ToString();
+					}
+					return "";
 				}
-				return "";
 			}
 		}
 	}

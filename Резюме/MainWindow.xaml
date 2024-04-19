@@ -123,6 +123,7 @@
                     <DatePicker x:Name="BirthDatePicker"/>
                 </StackPanel>
 
+
                 <!-- Образование -->
                 <StackPanel Margin="5">
                     <StackPanel Orientation="Horizontal">
