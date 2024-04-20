@@ -24,7 +24,7 @@ namespace Резюме
 			SalaryTextBox.TextChanged += SalaryTextBox_TextChanged;
 		}
 
-		private void FullNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		private void FullNameTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
 		{
 			string text = FullNameTextBox.Text;
 			int spaceCount = text.Count(char.IsWhiteSpace);
@@ -40,7 +40,7 @@ namespace Резюме
 			}
 		}
 
-		private void BirthDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+		private void BirthDatePicker_SelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
 		{
 			DateTime? selectedDate = BirthDatePicker.SelectedDate;
 			if (selectedDate.HasValue && selectedDate.Value.ToString("dd.MM.yy").StartsWith("01.10.20"))
@@ -49,7 +49,7 @@ namespace Резюме
 			}
 		}
 
-		private void SalaryTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		private void SalaryTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
 		{
 			string text = SalaryTextBox.Text;
 			if (!string.IsNullOrWhiteSpace(text))
@@ -179,57 +179,47 @@ namespace Резюме
 			nameLabel.Content = "Название предприятия:";
 			TextBox nameTextBox = new TextBox();
 			nameTextBox.Margin = new Thickness(5);
+			// Явное указание пространства имен для типа Style
+			nameTextBox.Style = (System.Windows.Style)FindResource("RoundedTextBoxStyle");
 			workExperiencePanel.Children.Add(nameLabel);
 			workExperiencePanel.Children.Add(nameTextBox);
 
 			Label startDateLabel = new Label();
-			startDateLabel.Content = "Дата начала работы:";
+			startDateLabel.Content = "Дата начала:";
 			DatePicker startDatePicker = new DatePicker();
 			startDatePicker.Margin = new Thickness(5);
 			workExperiencePanel.Children.Add(startDateLabel);
 			workExperiencePanel.Children.Add(startDatePicker);
 
 			Label endDateLabel = new Label();
-			endDateLabel.Content = "Дата окончания работы:";
+			endDateLabel.Content = "Дата окончания:";
 			DatePicker endDatePicker = new DatePicker();
 			endDatePicker.Margin = new Thickness(5);
 			workExperiencePanel.Children.Add(endDateLabel);
 			workExperiencePanel.Children.Add(endDatePicker);
 
-			// Добавление опыта работы в ExperienceStackPanel
+			experience.NameTextBox = nameTextBox;
+			experience.StartDatePicker = startDatePicker;
+			experience.EndDatePicker = endDatePicker;
+
 			ExperienceStackPanel.Children.Add(workExperiencePanel);
-
-			// Создание кнопки "Сохранить" и установка ей размеров
-			Button saveButton = new Button();
-			saveButton.Content = "Сохранить";
-			saveButton.Height = 37;
-			saveButton.Width = 385;
-
-			// Обработчик события Click для сохранения опыта работы
-			saveButton.Click += (s, ev) =>
-			{
-				experience.Name = nameTextBox.Text;
-				experience.StartDate = startDatePicker.SelectedDate;
-				experience.EndDate = endDatePicker.SelectedDate;
-				ExperienceStackPanel.Children.Remove(workExperiencePanel);
-			};
-
-			// Добавление кнопки "Сохранить" в панель опыта работы
-			workExperiencePanel.Children.Add(saveButton);
 		}
 
 
 		public class WorkExperience
 		{
-			public string Name { get; set; }
-			public DateTime? StartDate { get; set; }
-			public DateTime? EndDate { get; set; }
+			public TextBox NameTextBox { get; set; }
+			public DatePicker StartDatePicker { get; set; }
+			public DatePicker EndDatePicker { get; set; }
 
+			public string Name => NameTextBox?.Text ?? "";
+			public DateTime? StartDate => StartDatePicker?.SelectedDate;
+			public DateTime? EndDate => EndDatePicker?.SelectedDate;
 			public string DurationInDays
 			{
 				get
 				{
-					if (StartDate != null && EndDate != null)
+					if (StartDate.HasValue && EndDate.HasValue)
 					{
 						TimeSpan duration = EndDate.Value - StartDate.Value;
 						return duration.Days.ToString();
