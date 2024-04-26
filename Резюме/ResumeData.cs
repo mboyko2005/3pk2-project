@@ -19,20 +19,17 @@ namespace Резюме
 		public string SoftSkills { get; set; }
 		public string DesiredSchedule { get; set; }
 
-		[Required(ErrorMessage = "Поле 'Желаемая зарплата' обязательно для заполнения")]
-		[RegularExpression(@"^\d+$", ErrorMessage = "Желаемая зарплата должна быть числом")]
 		public string DesiredSalary { get; set; }
 		public List<WorkExperience> WorkExperiences { get; set; }
 	}
 
-	// Создаем собственный атрибут для проверки даты рождения
 	public class BirthDateRangeAttribute : ValidationAttribute
 	{
 		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 		{
 			var birthDate = (DateTime)value;
 			var minDate = DateTime.Now.AddYears(-100);
-			var maxDate = DateTime.Now.AddYears(-16); // Примерно 16 лет является разумным возрастом для работы
+			var maxDate = DateTime.Now.AddYears(-16);
 
 			if (birthDate < minDate || birthDate > maxDate)
 			{

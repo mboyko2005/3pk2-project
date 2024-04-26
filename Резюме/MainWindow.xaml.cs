@@ -25,6 +25,7 @@ namespace Резюме
 			FullNameTextBox.TextChanged += FullNameTextBox_TextChanged;
 			BirthDatePicker.SelectedDateChanged += BirthDatePicker_SelectedDateChanged;
 			SalaryTextBox.TextChanged += SalaryTextBox_TextChanged;
+			resumeData.WorkExperiences = workExperiences; // Инициализация списка WorkExperiences
 		}
 
 		private void FullNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -66,11 +67,28 @@ namespace Резюме
 		{
 			try
 			{
+				resumeData.FullName = FullNameTextBox.Text;
+				resumeData.BirthDate = BirthDatePicker.SelectedDate;
+				resumeData.Education = EducationTextBox.Text;
+				resumeData.HardSkills = HardSkillsTextBox.Text;
+				resumeData.SoftSkills = SoftSkillsTextBox.Text;
+				resumeData.DesiredSchedule = (ScheduleComboBox.SelectedItem as ComboBoxItem)?.Content?.ToString();
+
 				if (ValidateResumeData())
 				{
-					await SaveToJsonAsync();
-					await FillDocxAsync();
-					MessageBox.Show("Данные сохранены и экспортированы.");
+					bool jsonSaved = await SaveToJsonAsync();
+					if (jsonSaved)
+					{
+
+
+						
+						await FillDocxAsync();
+						MessageBox.Show("Данные сохранены и экспортированы.");
+					}
+					else
+					{
+						MessageBox.Show("Не удалось сохранить данные в JSON файл.");
+					}
 				}
 			}
 			catch (Exception ex)
@@ -78,6 +96,7 @@ namespace Резюме
 				MessageBox.Show($"Произошла ошибка: {ex.Message}");
 			}
 		}
+
 
 		private bool ValidateResumeData()
 		{
@@ -97,18 +116,27 @@ namespace Резюме
 		}
 
 
-		private async Task SaveToJsonAsync()
+		private async Task<bool> SaveToJsonAsync()
 		{
-			string json = JsonConvert.SerializeObject(resumeData, Newtonsoft.Json.Formatting.Indented);
-
-			await Task.Run(() =>
+			try
 			{
-				Application.Current.Dispatcher.InvokeAsync(() =>
+				string json = JsonConvert.SerializeObject(resumeData, Newtonsoft.Json.Formatting.Indented);
+				await Task.Run(() =>
 				{
-					File.WriteAllText("resume.json", json);
-				}).Wait();
-			});
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						File.WriteAllText("resume.json", json);
+					});
+				});
+				return true; // Успешно сохранено
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Ошибка сохранения JSON файла: {ex.Message}");
+				return false; // Ошибка сохранения
+			}
 		}
+
 
 		private async Task FillDocxAsync()
 		{
